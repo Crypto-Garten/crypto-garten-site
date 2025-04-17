@@ -1,0 +1,106 @@
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #f2fdf5;
+  color: #333;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #2ecc71, #27ae60);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: white;
+  color: #27ae60;
+  border: 2px solid #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.btn:hover {
+  background: #27ae60;
+  color: white;
+  border-color: white;
+}
+
+.btn.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+/* Sections */
+section {
+  padding: 60px 0;
+  max-width: 900px;
+  margin: auto;
+}
+
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+section ul {
+  padding-left: 20px;
+  list-style: square;
+}
+
+section ul li {
+  margin-bottom: 10px;
+}
+
+/* Roadmap timeline style */
+#roadmap p {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border-left: 4px solid #27ae60;
+}
+
+/* Call to Action */
+#cta {
+  text-align: center;
+  background: #eafaf1;
+}
+
+#cta h2 {
+  color: #14532d;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px 10px;
+  background-color: #14532d;
+  color: white;
+  margin-top: 50px;
+}
