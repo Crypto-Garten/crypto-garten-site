@@ -1,106 +1,124 @@
-
-/* General Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  background-color: #f2fdf5;
-  color: #333;
-  padding: 0 20px;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f9f4;
+    color: #2c3e50;
 }
 
-/* Hero Section */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+    height: 50px;
+}
+
+nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
 .hero {
-  background: linear-gradient(to right, #2ecc71, #27ae60);
-  color: white;
-  text-align: center;
-  padding: 80px 20px;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #eafbea;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .btn {
-  display: inline-block;
-  padding: 12px 24px;
-  background: white;
-  color: #27ae60;
-  border: 2px solid #fff;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  margin: 10px;
+    padding: 0.8rem 1.5rem;
+    background: #27ae60;
+    color: white;
+    text-decoration: none;
+    margin: 0.5rem;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background 0.3s ease;
 }
 
 .btn:hover {
-  background: #27ae60;
-  color: white;
-  border-color: white;
+    background: #219150;
 }
 
 .btn.secondary {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
+    background-color: #27AE60;
+    color: white;
 }
 
-/* Sections */
 section {
-  padding: 60px 0;
-  max-width: 900px;
-  margin: auto;
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: auto;
 }
 
-section h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
+ul {
+    padding-left: 1.5rem;
 }
 
-section ul {
-  padding-left: 20px;
-  list-style: square;
+.cta {
+    background: #dff5e1;
+    text-align: center;
 }
 
-section ul li {
-  margin-bottom: 10px;
-}
-
-/* Roadmap timeline style */
-#roadmap p {
-  margin-bottom: 10px;
-  padding-left: 10px;
-  border-left: 4px solid #27ae60;
-}
-
-/* Call to Action */
-#cta {
-  text-align: center;
-  background: #eafaf1;
-}
-
-#cta h2 {
-  color: #14532d;
-}
-
-/* Footer */
 footer {
-  text-align: center;
-  padding: 30px 10px;
-  background-color: #14532d;
-  color: white;
-  margin-top: 50px;
+    text-align: center;
+    padding: 1rem;
+    background: #ffffff;
+    margin-top: 2rem;
+}
+
+/* Team Section */
+.team-section {
+    padding: 4rem 2rem;
+    background-color: #f4f9f4;
+    text-align: center;
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.team-member {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.team-member h3 {
+    margin: 0.5rem 0 0.3rem;
+    font-size: 1.2rem;
+}
+
+.team-member .role {
+    font-weight: bold;
+    color: #27AE60;
+    margin-bottom: 0.5rem;
 }
