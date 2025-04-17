@@ -1,0 +1,68 @@
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background: #f4f9f4;
+  color: #2c3e50;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1rem 2rem;
+  border-bottom: 3px solid #27ae60;
+}
+.logo {
+  height: 50px;
+}
+h1 {
+  font-size: 2rem;
+  color: #27ae60;
+}
+section {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+.hero {
+  text-align: center;
+  background: #eafbea;
+}
+.hero h2 {
+  font-size: 2rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  background: #27ae60;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.team-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.member {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.member img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+footer {
+  text-align: center;
+  background: #fff;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
