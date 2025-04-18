@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crypto Garten</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
 
@@ -19,9 +19,9 @@
     <h2>Welcome to the Future of Sustainable Blockchain</h2>
     <p>Crypto Garten ($GARTEN) is the first cryptocurrency dedicated to eco-friendly innovation, powered entirely by renewable energy sources.</p>
     <a href="Cryptogarten_Whitepaper.pdf" class="btn" target="_blank">Read Whitepaper</a>
-    <a href="#" class="btn" id="buyBtn">Buy with MetaMask</a>
+    <button onclick="buyWithMetaMask()" class="btn">Buy with MetaMask</button>
     <a href="mailto:crypto_garten@hotmail.com" class="btn">Buy Manually</a>
-    <a href="#" class="btn" id="airdropBtn">Claim Airdrop</a>
+    <button onclick="claimAirdrop()" class="btn">Claim Airdrop</button>
     <p id="feedback" style="margin-top: 1rem;"></p>
   </section>
 
@@ -75,6 +75,54 @@
   <footer>
     <p>&copy; 2025 Crypto Garten | Contact us at <a href="mailto:crypto_garten@hotmail.com">crypto_garten@hotmail.com</a></p>
   </footer>
+
+  <script>
+    const presaleContractAddress = "0xbE9DD05de62094a885dB6fD202c81232805d3520";
+    const airdropContractAddress = "0xbE9DD05de62094a885dB6fD202c81232805d3520";
+
+    const presaleABI = ["function buyTokens() public payable"];
+    const airdropABI = ["function claim() public"];
+
+    async function buyWithMetaMask() {
+      if (typeof window.ethereum === 'undefined') {
+        alert("MetaMask is not installed.");
+        return;
+      }
+
+      try {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(presaleContractAddress, presaleABI, signer);
+
+        const tx = await contract.buyTokens({ value: ethers.utils.parseEther("0.01") });
+        await tx.wait();
+        alert("Token purchase successful!");
+      } catch (error) {
+        alert("Transaction failed: " + error.message);
+      }
+    }
+
+    async function claimAirdrop() {
+      if (typeof window.ethereum === 'undefined') {
+        alert("MetaMask is not installed.");
+        return;
+      }
+
+      try {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(airdropContractAddress, airdropABI, signer);
+
+        const tx = await contract.claim();
+        await tx.wait();
+        alert("Airdrop claimed!");
+      } catch (error) {
+        alert("Claim failed: " + error.message);
+      }
+    }
+  </script>
 
 </body>
 </html>
