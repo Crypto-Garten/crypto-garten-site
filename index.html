@@ -1,63 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=\"en\">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Garten – Green Crypto</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset=\"UTF-8\" />
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
+  <title>Crypto Garten</title>
+  <link rel=\"stylesheet\" href=\"style.css\" />
+  <script src=\"https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js\"></script>
 </head>
 <body>
   <header>
-    <img src="A_logo_design_in_the_image_features_a_wind_turbine.png" alt="Garten Logo" class="logo" />
+    <img src=\"A_logo_design_in_the_image_features_a_wind_turbine.png\" alt=\"Garten Logo\" class=\"logo\" />
     <h1>Crypto Garten</h1>
   </header>
 
   <main>
-    <section class="intro">
+    <section class=\"intro\">
       <p>Cryptogarten ($GARTEN) is the world’s first green crypto ecosystem—fueling blockchain innovation with 100% renewable energy.</p>
-      <a href="Cryptogarten_Whitepaper.pdf" class="btn secondary" target="_blank">Read Whitepaper</a>
+      <a href=\"Cryptogarten_Whitepaper.pdf\" class=\"btn secondary\" target=\"_blank\">Read Whitepaper</a>
     </section>
 
-    <section class="buy">
+    <section class=\"buy\">
       <h2>Buy $GARTEN Tokens</h2>
-      <button class="btn">Buy with MetaMask</button>
-      <p>Don't have MetaMask? <a href="mailto:crypto_garten@hotmail.com">Contact us</a> to buy manually.</p>
+      <button id=\"buyButton\" class=\"btn\">Buy with MetaMask</button>
+      <p>Don't have MetaMask? <a href=\"mailto:crypto_garten@hotmail.com\">Contact us</a> to buy manually.</p>
+      <p id=\"status\"></p>
     </section>
 
-    <section class="airdrop">
+    <section class=\"airdrop\">
       <h2>Claim Airdrop</h2>
-      <button class="btn secondary">Claim Airdrop</button>
+      <button id=\"claimAirdrop\" class=\"btn secondary\">Claim Airdrop</button>
+      <p id=\"claimStatus\"></p>
     </section>
 
-    <section class="team">
+    <section class=\"team\">
       <h2>Meet the Team</h2>
-      <div class="team-grid">
-
-        <div class="member">
-          <img src="A_professional_headshot_of_Hussein_Khalifeh,_Found.png" alt="Hussein Khalifeh" />
+      <div class=\"team-grid\">
+        <div class=\"member\">
+          <img src=\"A_professional_headshot_of_Hussein_Khalifeh,_Found.png\" alt=\"Hussein Khalifeh\" />
           <h3>Hussein Khalifeh</h3>
-          <p class="role">Founder & CEO</p>
+          <p class=\"role\">Founder & CEO</p>
           <p>Doctor from Germany, Head of Department, and real estate investor passionate about blockchain and green innovation.</p>
         </div>
-
-        <div class="member">
-          <img src="A_professional_headshot_photograph_features_a_midd.png" alt="Hassan Own" />
+        <div class=\"member\">
+          <img src=\"A_professional_headshot_photograph_features_a_midd.png\" alt=\"Hassan Own\" />
           <h3>Hassan Own</h3>
-          <p class="role">Business Strategy Lead</p>
+          <p class=\"role\">Business Strategy Lead</p>
           <p>Experienced businessman and trading expert, specializing in economics, digital markets, and clean energy.</p>
         </div>
-
-        <div class="member">
-          <img src="A_digital_photograph_features_a_portrait_of_a_youn.png" alt="Fatima Siblini" />
+        <div class=\"member\">
+          <img src=\"A_digital_photograph_features_a_portrait_of_a_youn.png\" alt=\"Fatima Siblini\" />
           <h3>Fatima Siblini</h3>
-          <p class="role">Advertising & Branding Specialist</p>
+          <p class=\"role\">Advertising & Branding Specialist</p>
           <p>Creative lead in digital marketing, with expertise in brand strategy and audience engagement across blockchain and tech sectors.</p>
         </div>
-
-        <div class="member">
-          <img src="A_digital_photograph_presents_a_headshot_of_a_youn.png" alt="Inaam Khalifeh" />
+        <div class=\"member\">
+          <img src=\"A_digital_photograph_presents_a_headshot_of_a_youn.png\" alt=\"Inaam Khalifeh\" />
           <h3>Inaam Khalifeh</h3>
-          <p class="role">Project Manager</p>
+          <p class=\"role\">Project Manager</p>
           <p>Skilled in team coordination, milestone tracking, and ensuring smooth project execution.</p>
         </div>
       </div>
@@ -65,7 +64,45 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Garten | Email: <a href="mailto:crypto_garten@hotmail.com">crypto_garten@hotmail.com</a></p>
+    <p>&copy; 2025 Garten | Email: <a href=\"mailto:crypto_garten@hotmail.com\">crypto_garten@hotmail.com</a></p>
   </footer>
+
+<script>
+const presaleAddress = \"0xffbC6fAac4fC3ebfFD2EDBE6c5C697F958b12F35\";
+const airdropAddress = \"0xbE9DD05de62094a885dB6fD202c81232805d3520\";
+const airdropABI = [{\"inputs\":[],\"name\"😕"claim\",\"outputs\":[],\"stateMutability\"😕"nonpayable\",\"type\"😕"function\"}];
+
+// Buy with MetaMask
+const buyBtn = document.getElementById(\"buyButton\");
+buyBtn.onclick = async () => {
+  if (!window.ethereum) return alert(\"Please install MetaMask.\");
+  const web3 = new Web3(window.ethereum);
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const bnb = web3.utils.toWei(\"0.01\", \"ether\");
+  document.getElementById(\"status\").innerText = \"Sending...\";
+  try {
+    await web3.eth.sendTransaction({ from: accounts[0], to: presaleAddress, value: bnb });
+    document.getElementById(\"status\").innerText = \"✅ Success!\";
+  } catch (err) {
+    document.getElementById(\"status\").innerText = \"❌ Transaction failed.\";
+  }
+};
+
+// Airdrop claim
+const claimBtn = document.getElementById(\"claimAirdrop\");
+claimBtn.onclick = async () => {
+  if (!window.ethereum) return alert(\"Please install MetaMask.\");
+  const web3 = new Web3(window.ethereum);
+  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  const airdrop = new web3.eth.Contract(airdropABI, airdropAddress);
+  document.getElementById(\"claimStatus\").innerText = \"Claiming...\";
+  try {
+    await airdrop.methods.claim().send({ from: accounts[0] });
+    document.getElementById(\"claimStatus\").innerText = \"✅ Airdrop received!\";
+  } catch (err) {
+    document.getElementById(\"claimStatus\").innerText = \"❌ Already claimed or failed.\";
+  }
+};
+</script>
 </body>
 </html>
