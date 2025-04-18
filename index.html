@@ -7,6 +7,72 @@
   <title>Crypto Garten</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+  <!-- Prelaunch Presale Section -->
+<section id="presale" style="text-align: center; padding: 50px;">
+  <h2>Prelaunch Presale is LIVE!</h2>
+  <p>Buy $GARTEN tokens before the timer runs out!</p>
+
+  <div id="countdown" style="font-size: 24px; margin: 20px;"></div>
+
+  <button id="buyButton" style="padding: 15px 30px; font-size: 18px; background-color: green; color: white; border: none; cursor: pointer;">
+    Buy $GARTEN Now
+  </button>
+
+  <p id="status" style="margin-top: 20px; font-size: 16px;"></p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script>
+const presaleAddress = "0xffbC6fAac4fC3ebfFD2EDBE6c5C697F958b12F35"; // Your presale contract address
+const countdownTarget = new Date().getTime() + 7 * 24 * 60 * 60 * 1000; // 7-day countdown
+
+// Countdown timer
+const countdown = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = countdownTarget - now;
+
+  if (distance < 0) {
+    clearInterval(countdown);
+    document.getElementById("countdown").innerHTML = "Presale has ended.";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("countdown").innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s remaining`;
+}, 1000);
+
+// Buy Button Handler
+document.getElementById("buyButton").onclick = async () => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask to use this feature.");
+    return;
+  }
+
+  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+  const account = accounts[0];
+  const web3 = new window.Web3(window.ethereum);
+
+  const bnbAmount = web3.utils.toWei("0.01", "ether"); // Default amount
+
+  document.getElementById("status").innerText = "Sending transaction...";
+
+  try {
+    const tx = await web3.eth.sendTransaction({
+      from: account,
+      to: presaleAddress,
+      value: bnbAmount
+    });
+    document.getElementById("status").innerText = "✅ Success! $GARTEN tokens will be delivered shortly.";
+  } catch (error) {
+    console.error(error);
+    document.getElementById("status").innerText = "❌ Transaction failed or cancelled.";
+  }
+};
+</script>
 <body>
   <header>
     <div class="header-left"><img src="logo.png" class="logo" alt="Logo"></div>
