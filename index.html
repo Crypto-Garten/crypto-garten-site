@@ -2,127 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crypto Garten</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    #feedback { margin-top: 15px; color: #00cc66; font-weight: bold; }
+  </style>
 </head>
 <body>
 
-  <header class="header">
-    <img src="logo.png" alt="Crypto Garten Logo" class="logo" />
-    <h1>Crypto Garten</h1>
-    <p>The Green Crypto Revolution</p>
-  </header>
+  <h1>Welcome to Crypto Garten</h1>
+  <p>Buy, claim and stake GARTEN tokens directly from this page.</p>
 
-  <section class="hero">
-    <h2>Welcome to the Future of Sustainable Blockchain</h2>
-    <p>Crypto Garten ($GARTEN) is the first cryptocurrency dedicated to eco-friendly innovation, powered entirely by renewable energy sources.</p>
-    <a href="Cryptogarten_Whitepaper.pdf" class="btn" target="_blank">Read Whitepaper</a>
-    <button onclick="buyWithMetaMask()" class="btn">Buy with MetaMask</button>
-    <a href="mailto:crypto_garten@hotmail.com" class="btn">Buy Manually</a>
-    <button onclick="claimAirdrop()" class="btn">Claim Airdrop</button>
-    <p id="feedback" style="margin-top: 1rem;"></p>
-  </section>
+  <button id="buyBtn">Buy GARTEN (Presale)</button>
+  <button id="airdropBtn">Claim Airdrop</button>
+  <button onclick="stakeTokens()">Stake GARTEN</button>
+  <button onclick="withdrawStake()">Withdraw Stake</button>
 
-  <section class="about">
-    <h2>Why Crypto Garten?</h2>
-    <p>Crypto Garten is more than just a token. It's a movement to align cryptocurrency with climate action — using wind, solar, and hydro energy to drive the blockchain revolution forward.</p>
-  </section>
+  <div id="feedback"></div>
 
-  <section class="features">
-    <h2>Staking & Airdrop</h2>
-    <p>Stake your GARTEN tokens to earn passive income while supporting a cleaner planet. Early adopters can also claim free tokens through our airdrop program.</p>
-  </section>
-
-  <section class="token">
-    <h2>Token Price & Potential</h2>
-    <p>Launch Price: $0.001</p>
-    <p>Crypto Garten is the only green crypto project of its kind — positioning it for massive growth and unique utility in a sustainable future.</p>
-  </section>
-
-  <section class="team">
-    <h2>Meet the Team</h2>
-    <div class="team-grid">
-      <div class="member">
-        <img src="hussein_khalifeh.jpg" alt="Hussein Khalifeh" />
-        <h3>Hussein Khalifeh</h3>
-        <p>Founder & CEO — Doctor from Germany and real estate investor leading the green blockchain mission.</p>
-      </div>
-      <div class="member">
-        <img src="hassan_own.jpg" alt="Hassan Own" />
-        <h3>Hassan Own</h3>
-        <p>Business Strategy Lead — Expert in global trade, economics, and clean energy investment.</p>
-      </div>
-      <div class="member">
-        <img src="fatima_siblini.jpg" alt="Fatima Siblini" />
-        <h3>Fatima Siblini</h3>
-        <p>Advertising & Branding Specialist — Creative leader driving outreach and community engagement.</p>
-      </div>
-      <div class="member">
-        <img src="inaam_khalifeh.jpg" alt="Inaam Khalifeh" />
-        <h3>Inaam Khalifeh</h3>
-        <p>Project Manager — Coordinator of teams, timelines, and technical execution.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="disclaimer">
-    <h2>Disclaimer</h2>
-    <p>Investing in cryptocurrency involves risk. Crypto Garten makes no guarantee of profit. Participants are responsible for their own decisions. In the event the project does not succeed, Crypto Garten is not liable for losses. This is not financial advice.</p>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Crypto Garten | Contact us at <a href="mailto:crypto_garten@hotmail.com">crypto_garten@hotmail.com</a></p>
-  </footer>
-
+  <!-- Web3 & GARTEN Interaction Script -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
   <script>
-    const presaleContractAddress = "0xbE9DD05de62094a885dB6fD202c81232805d3520";
-    const airdropContractAddress = "0xbE9DD05de62094a885dB6fD202c81232805d3520";
+    const tokenAddress = "0x65508a62173df9502F9f2e098C583230Fb1eA875";
+    const airdropAddress = "0xc823AE3F6e92dC741A37C49b25e6C24d3F130Ea1";
+    const presaleAddress = "0x2422287C38434FfA3c04365E3fcDf60bdaB156e2";
+    const stakingAddress = "0xF47D6F3e86E5f75681292e57648C5c5E031915be";
 
-    const presaleABI = ["function buyTokens() public payable"];
-    const airdropABI = ["function claim() public"];
+    const stakingABI = [
+      { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "stake", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+      { "inputs": [], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
+    ];
 
-    async function buyWithMetaMask() {
-      if (typeof window.ethereum === 'undefined') {
-        alert("MetaMask is not installed.");
-        return;
+    const tokenABI = [
+      { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" },{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }
+    ];
+
+    window.addEventListener('load', async () => {
+      if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        await ethereum.request({ method: 'eth_requestAccounts' });
+
+        document.getElementById('buyBtn')?.addEventListener('click', async () => {
+          const amountInBNB = prompt("Enter BNB amount to buy GARTEN:", "0.1");
+          if (!amountInBNB) return;
+
+          const value = web3.utils.toWei(amountInBNB, 'ether');
+          const accounts = await web3.eth.getAccounts();
+
+          try {
+            await web3.eth.sendTransaction({ from: accounts[0], to: presaleAddress, value });
+            document.getElementById("feedback").innerText = "Purchase successful!";
+          } catch (err) {
+            console.error(err);
+            document.getElementById("feedback").innerText = "Transaction failed.";
+          }
+        });
+
+        document.getElementById('airdropBtn')?.addEventListener('click', async () => {
+          const airdropABI = [{ "inputs":[],"name":"claim","outputs":[],"stateMutability":"nonpayable","type":"function" }];
+          const contract = new web3.eth.Contract(airdropABI, airdropAddress);
+          const accounts = await web3.eth.getAccounts();
+
+          try {
+            await contract.methods.claim().send({ from: accounts[0] });
+            document.getElementById("feedback").innerText = "Airdrop claimed!";
+          } catch (err) {
+            console.error(err);
+            document.getElementById("feedback").innerText = "Airdrop failed.";
+          }
+        });
+      } else {
+        alert('MetaMask not found!');
       }
+    });
+
+    async function stakeTokens() {
+      const stakeAmount = prompt("Enter amount of GARTEN to stake:");
+      if (!stakeAmount) return;
+
+      const web3 = window.web3;
+      const accounts = await web3.eth.getAccounts();
+      const contract = new web3.eth.Contract(stakingABI, stakingAddress);
+      const token = new web3.eth.Contract(tokenABI, tokenAddress);
+      const stakeWei = web3.utils.toWei(stakeAmount, "ether");
 
       try {
-        await ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(presaleContractAddress, presaleABI, signer);
-
-        const tx = await contract.buyTokens({ value: ethers.utils.parseEther("0.01") });
-        await tx.wait();
-        alert("Token purchase successful!");
-      } catch (error) {
-        alert("Transaction failed: " + error.message);
+        await token.methods.approve(stakingAddress, stakeWei).send({ from: accounts[0] });
+        await contract.methods.stake(stakeWei).send({ from: accounts[0] });
+        document.getElementById("feedback").innerText = "Stake successful!";
+      } catch (e) {
+        console.error(e);
+        document.getElementById("feedback").innerText = "Stake failed.";
       }
     }
 
-    async function claimAirdrop() {
-      if (typeof window.ethereum === 'undefined') {
-        alert("MetaMask is not installed.");
-        return;
-      }
+    async function withdrawStake() {
+      const web3 = window.web3;
+      const accounts = await web3.eth.getAccounts();
+      const contract = new web3.eth.Contract(stakingABI, stakingAddress);
 
       try {
-        await ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(airdropContractAddress, airdropABI, signer);
-
-        const tx = await contract.claim();
-        await tx.wait();
-        alert("Airdrop claimed!");
-      } catch (error) {
-        alert("Claim failed: " + error.message);
+        await contract.methods.withdraw().send({ from: accounts[0] });
+        document.getElementById("feedback").innerText = "Withdraw successful!";
+      } catch (e) {
+        console.error(e);
+        document.getElementById("feedback").innerText = "Withdraw failed.";
       }
     }
   </script>
-
 </body>
 </html>
