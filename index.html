@@ -28,43 +28,54 @@
   <section>
     <h2>Meet the Team</h2>
     <div class="team-grid">
-
       <div class="member">
         <img src="hussein_khalifeh.jpg" alt="Hussein Khalifeh">
         <h3>Hussein Khalifeh</h3>
-        <p>Founder & CEO — Doctor from Germany and real estate investor leading the green blockchain mission.</p>
+        <p>Founder & CEO — Real estate investor and green blockchain visionary.</p>
       </div>
-
       <div class="member">
         <img src="hassan_own.jpg" alt="Hassan Own">
         <h3>Hassan Own</h3>
-        <p>Business Strategy Lead — Expert in global trade, economics; and clean energy investment.</p>
+        <p>Business Strategy Lead — Focused on economics and energy investment.</p>
       </div>
-
       <div class="member">
         <img src="fatima_siblini.jpg" alt="Fatima Siblini">
         <h3>Fatima Siblini</h3>
-        <p>Advertising & Branding Specialist — Creative leader driving outreach and community engagement.</p>
+        <p>Branding & Community — Creative energy behind outreach & engagement.</p>
       </div>
-
       <div class="member">
         <img src="inaam_khalifeh.jpg" alt="Inaam Khalifeh">
         <h3>Inaam Khalifeh</h3>
-        <p>Project Manager — Coordinator of teams, timelines, and technical execution.</p>
+        <p>Project Manager — Team coordination, infrastructure & scaling.</p>
       </div>
-
     </div>
   </section>
 
-  <section class="feedback">
-    <p id="feedback"></p>
+  <section>
+    <h2>Tokenomics</h2>
+    <ul>
+      <li>40% Presale</li>
+      <li>25% Staking Rewards</li>
+      <li>15% Team</li>
+      <li>10% Airdrop</li>
+      <li>10% Ecosystem & Development</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Clean Energy in Action</h2>
+    <video controls autoplay muted loop width="100%">
+      <source src="garten_explainer_video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <p>Solar and wind energy powering mining infrastructure — a future where blockchain meets sustainability.</p>
   </section>
 
   <footer>
-    <p><strong>Disclaimer:</strong> Investing in cryptocurrency involves risk. Crypto Garten makes no guarantee of profit. Participants are responsible for their own decisions. In the event the project does not succeed, Crypto Garten is not liable for losses. This is not financial advice.</p>
+    <p><strong>Disclaimer:</strong> Crypto investments involve risk. Crypto Garten provides no financial guarantees. You are responsible for your own decisions.</p>
+    <p>Contact us: info@cryptogarten.org</p>
   </footer>
 
-  <!-- Web3 Script (Buy, Airdrop, Stake, Withdraw) -->
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
   <script>
     const tokenAddress = "0x65508a62173df9502F9f2e098C583230Fb1eA875";
@@ -73,83 +84,76 @@
     const stakingAddress = "0xF47D6F3e86E5f75681292e57648C5c5E031915be";
 
     const stakingABI = [
-      { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "stake", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+      { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+        "name": "stake", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
       { "inputs": [], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }
     ];
 
     const tokenABI = [
-      { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" },{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }
+      { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" },
+                   { "internalType": "uint256", "name": "amount", "type": "uint256" }],
+        "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "nonpayable", "type": "function" }
     ];
 
     window.addEventListener('load', async () => {
       if (window.ethereum) {
-        window.web3 = new Web3(ethereum);
+        window.web3 = new Web3(window.ethereum);
         await ethereum.request({ method: 'eth_requestAccounts' });
 
-        document.getElementById('buyBtn')?.addEventListener('click', async () => {
+        document.getElementById('buyBtn').addEventListener('click', async () => {
           const amountInBNB = prompt("Enter BNB amount to buy GARTEN:", "0.1");
           if (!amountInBNB) return;
-
           const value = web3.utils.toWei(amountInBNB, 'ether');
           const accounts = await web3.eth.getAccounts();
-
           try {
             await web3.eth.sendTransaction({ from: accounts[0], to: presaleAddress, value });
             document.getElementById("feedback").innerText = "Purchase successful!";
           } catch (err) {
-            console.error(err);
             document.getElementById("feedback").innerText = "Transaction failed.";
           }
         });
 
-        document.getElementById('airdropBtn')?.addEventListener('click', async () => {
+        document.getElementById('airdropBtn').addEventListener('click', async () => {
           const airdropABI = [{ "inputs":[],"name":"claim","outputs":[],"stateMutability":"nonpayable","type":"function" }];
           const contract = new web3.eth.Contract(airdropABI, airdropAddress);
           const accounts = await web3.eth.getAccounts();
-
           try {
             await contract.methods.claim().send({ from: accounts[0] });
             document.getElementById("feedback").innerText = "Airdrop claimed!";
           } catch (err) {
-            console.error(err);
             document.getElementById("feedback").innerText = "Airdrop failed.";
           }
         });
+
       } else {
-        alert('MetaMask not found!');
+        alert('MetaMask not detected. Please install it.');
       }
     });
 
     async function stakeTokens() {
-      const stakeAmount = prompt("Enter amount of GARTEN to stake:");
-      if (!stakeAmount) return;
-
-      const web3 = window.web3;
+      const amount = prompt("Enter amount of GARTEN to stake:");
+      if (!amount) return;
+      const stakeWei = web3.utils.toWei(amount, 'ether');
       const accounts = await web3.eth.getAccounts();
-      const contract = new web3.eth.Contract(stakingABI, stakingAddress);
       const token = new web3.eth.Contract(tokenABI, tokenAddress);
-      const stakeWei = web3.utils.toWei(stakeAmount, "ether");
-
+      const stakeContract = new web3.eth.Contract(stakingABI, stakingAddress);
       try {
         await token.methods.approve(stakingAddress, stakeWei).send({ from: accounts[0] });
-        await contract.methods.stake(stakeWei).send({ from: accounts[0] });
+        await stakeContract.methods.stake(stakeWei).send({ from: accounts[0] });
         document.getElementById("feedback").innerText = "Stake successful!";
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
         document.getElementById("feedback").innerText = "Stake failed.";
       }
     }
 
     async function withdrawStake() {
-      const web3 = window.web3;
       const accounts = await web3.eth.getAccounts();
       const contract = new web3.eth.Contract(stakingABI, stakingAddress);
-
       try {
         await contract.methods.withdraw().send({ from: accounts[0] });
         document.getElementById("feedback").innerText = "Withdraw successful!";
-      } catch (e) {
-        console.error(e);
+      } catch (err) {
         document.getElementById("feedback").innerText = "Withdraw failed.";
       }
     }
