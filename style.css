@@ -19,3 +19,10 @@ header, footer {
   border: none;
   cursor: pointer;
 }
+.team img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px;
+}
