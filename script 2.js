@@ -1,73 +1,68 @@
-// Import Ethers.js via <script> in HTML as discussed
-
-// Smart contract addresses
-const tokenAddress = "0x65508a62173df9502F9f2e098C583230Fb1eA875";         // GARTEN Token
-const airdropAddress = "0xc823AE3F6e92dC741A37C49b25e6C24d3F130Ea1";
+// Contract addresses
 const presaleAddress = "0x2422287C38434FfA3c04365E3fcDf60bdaB156e2";
+const airdropAddress = "0xc823AE3F6e92dC741A37C49b25e6C24d3F130Ea1";
 const stakingAddress = "0xF47D6F3e86E5f75681292e57648C5c5E031915be";
-
-// ABI placeholders (you need real ABIs here!)
-const simpleABI = ["function claim() public", "function stake() public", "function withdraw() public", "function buy() payable"];
 
 // Connect wallet
 async function connectWallet() {
   if (typeof window.ethereum !== 'undefined') {
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-    console.log("Wallet connected");
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      alert("Wallet connected: " + accounts[0]);
+    } catch (err) {
+      console.error("Connection error", err);
+    }
   } else {
     alert("Please install MetaMask.");
   }
 }
 
-// Buy tokens from presale
-async function buyTokens() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const presaleContract = new ethers.Contract(presaleAddress, simpleABI, signer);
-
-  const valueInEth = "0.01"; // adjust amount if needed
-  const tx = await presaleContract.buy({ value: ethers.utils.parseEther(valueInEth) });
-  await tx.wait();
-  alert("Tokens bought successfully!");
+// Buy with MetaMask
+async function buyToken() {
+  const tx = {
+    to: presaleAddress,
+    value: '0x2386F26FC10000'  // 0.01 ETH in hexadecimal (adjust as needed)
+  };
+  await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
 }
 
 // Claim airdrop
 async function claimAirdrop() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const airdropContract = new ethers.Contract(airdropAddress, simpleABI, signer);
-
-  const tx = await airdropContract.claim();
-  await tx.wait();
-  alert("Airdrop claimed!");
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    params: [{
+      to: airdropAddress,
+      data: '0x4e71d92d' // claim() function signature hash
+    }]
+  });
 }
 
 // Stake tokens
 async function stakeTokens() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const stakingContract = new ethers.Contract(stakingAddress, simpleABI, signer);
-
-  const tx = await stakingContract.stake();
-  await tx.wait();
-  alert("Tokens staked!");
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    params: [{
+      to: stakingAddress,
+      data: '0xa694fc3a' // stake() function signature hash
+    }]
+  });
 }
 
 // Withdraw tokens
 async function withdrawTokens() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const stakingContract = new ethers.Contract(stakingAddress, simpleABI, signer);
-
-  const tx = await stakingContract.withdraw();
-  await tx.wait();
-  alert("Tokens withdrawn!");
+  await window.ethereum.request({
+    method: 'eth_sendTransaction',
+    params: [{
+      to: stakingAddress,
+      data: '0x3ccfd60b' // withdraw() function signature hash
+    }]
+  });
 }
 
-// Hook up buttons
+// Attach to buttons
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("connect").onclick = connectWallet;
-  document.getElementById("buy").onclick = buyTokens;
+  document.getElementById("buy").onclick = buyToken;
   document.getElementById("airdrop").onclick = claimAirdrop;
   document.getElementById("stake").onclick = stakeTokens;
   document.getElementById("withdraw").onclick = withdrawTokens;
