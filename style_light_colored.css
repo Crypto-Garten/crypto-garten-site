@@ -69,9 +69,36 @@ ul {
     background-color: #34953f;
 }
 
-/* Video Centering */
+/* Video Section */
 .video {
     text-align: center;
+}
+
+.video-wrapper {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: none;
+}
+
+/* Countdown Timer */
+.countdown {
+    text-align: center;
+    margin: 40px 0;
+}
+#timer {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2b7a78;
 }
 
 /* Roadmap Section */
@@ -96,14 +123,14 @@ ul {
 /* Team Section */
 .team-grid {
     display: flex;
-    justify-content: center;
+    justify-content: space-around; /* changed to space-around */
     gap: 30px;
     flex-wrap: wrap;
 }
 
 .team-member {
     text-align: center;
-    max-width: 200px;
+    width: 220px; /* fixed width to align members */
 }
 
 .team-member img {
@@ -113,6 +140,55 @@ ul {
     border-radius: 50%;
     margin-bottom: 10px;
     border: 2px solid #3fa34d;
+}
+
+/* FAQ Accordion */
+.faq-item {
+    margin-bottom: 10px;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background: #3fa34d;
+    color: white;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.faq-answer {
+    display: none;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.faq-question.active {
+    background: #34953f;
+}
+
+/* Press & News Section */
+.news {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.news-list article {
+    margin-bottom: 20px;
+    background: #eef9ee;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.news-list article h3 {
+    margin-top: 0;
+    color: #2b7a78;
 }
 
 /* Footer */
