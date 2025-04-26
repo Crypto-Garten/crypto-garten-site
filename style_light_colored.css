@@ -74,12 +74,14 @@ ul {
     text-align: center;
 }
 
+center;
+}
 .video-wrapper {
     position: relative;
     max-width: 100%;
-    margin: auto;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    border-radius: 12px;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
     overflow: hidden;
 }
 
