@@ -18,28 +18,36 @@
     <main>
         <section class="intro">
             <h2>Welcome to the Green Crypto Revolution</h2>
-            <p>Crypto Garten is building a sustainable blockchain future with innovative green technology, token rewards, and community-led governance.</p>
+            <p><strong>Crypto-Garten (Token: GARTEN)</strong> is building a sustainable blockchain future with innovative green technology, staking rewards, eco-mining, and community-led governance.</p>
+        </section>
+
+        <section class="countdown">
+            <h2>Launching GARTEN Token In:</h2>
+            <div id="timer">
+                <span id="days">00</span> Days 
+                <span id="hours">00</span> Hours 
+                <span id="minutes">00</span> Minutes 
+                <span id="seconds">00</span> Seconds
+            </div>
         </section>
 
         <section class="actions">
             <button id="connect">Connect Wallet</button>
-            <button id="buy">Buy with MetaMask</button>
+            <button id="buy">Buy GARTEN with MetaMask</button>
             <button id="airdrop">Claim Airdrop</button>
-            <button id="stake">Stake</button>
+            <button id="stake">Stake GARTEN</button>
             <button id="withdraw">Withdraw</button>
             <a href="whitepaper.pdf" class="button-link" target="_blank">Read Whitepaper</a>
         </section>
 
-     <section class="video">
-     <h2>Project Overview Video</h2>
-    <video controls width="100%" style="max-width:100%;">
-        <source src="video.mp4" type="video/mp4">
-        Your browser does not support video playback.
-    </video>
-</section>
-            
-                Your browser does not support video playback.
-            </video>
+        <section class="video">
+            <h2>Project Overview Video</h2>
+            <div class="video-wrapper">
+                <video id="cryptoVideo" controls width="100%" style="max-width:100%;">
+                    <source src="video.mp4" type="video/mp4">
+                    Your browser does not support video playback.
+                </video>
+            </div>
         </section>
 
         <section class="roadmap">
@@ -119,11 +127,38 @@
 
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
-            <ul>
-                <li><strong>How do I buy GARTEN?</strong><br>Use MetaMask or transfer to the contract.</li>
-                <li><strong>What if I lose MetaMask access?</strong><br>Backup your wallet — we cannot recover private keys.</li>
-                <li><strong>Is GARTEN listed?</strong><br>Listing expected in Q3 2025.</li>
-            </ul>
+            <div class="faq-item">
+                <button class="faq-question">What is GARTEN Token?</button>
+                <div class="faq-answer">
+                    <p>GARTEN is the native token powering the Crypto-Garten ecosystem, supporting green energy and blockchain innovation.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How do I buy GARTEN?</button>
+                <div class="faq-answer">
+                    <p>You can buy GARTEN using MetaMask or directly from our smart contract address on BSC (Binance Smart Chain).</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Is GARTEN listed on exchanges?</button>
+                <div class="faq-answer">
+                    <p>GARTEN token is expected to be listed on PancakeSwap and other exchanges starting from Q3 2025.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="news">
+            <h2>Press & News</h2>
+            <div class="news-list">
+                <article>
+                    <h3>April 2025 — GARTEN Token Presale Announced</h3>
+                    <p>We are excited to announce the presale of GARTEN Token! More details available soon on Pinksale.</p>
+                </article>
+                <article>
+                    <h3>June 2025 — GARTEN Official Launch</h3>
+                    <p>GARTEN Token officially launches on BSC, with staking rewards and eco-project funding beginning immediately.</p>
+                </article>
+            </div>
         </section>
 
         <section class="contact">
@@ -137,8 +172,43 @@
             <a href="terms.html">Terms</a> |
             <a href="privacy.html">Privacy</a> |
             <a href="disclaimer.html">Disclaimer</a><br>
-            Email: <a href="mailto:crypto_garten@hotmail.com">crypto_garten@hotmail.com</a> | © 2025 Crypto Garten
+            Email: <a href="mailto:crypto_garten@hotmail.com">crypto_garten@hotmail.com</a> | © 2025 Crypto-Garten – GARTEN Token
         </p>
     </footer>
+
+    <script>
+    // Countdown Timer
+    var countDownDate = new Date("June 1, 2025 00:00:00").getTime();
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = seconds;
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Launched!";
+        }
+    }, 1000);
+
+    // FAQ Accordion
+    const faqQuestions = document.querySelectorAll(".faq-question");
+    faqQuestions.forEach(button => {
+        button.addEventListener("click", () => {
+            button.classList.toggle("active");
+            const answer = button.nextElementSibling;
+            if (answer.style.display === "block") {
+                answer.style.display = "none";
+            } else {
+                answer.style.display = "block";
+            }
+        });
+    });
+    </script>
 </body>
 </html>
