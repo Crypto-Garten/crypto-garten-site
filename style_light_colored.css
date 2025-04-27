@@ -222,3 +222,19 @@ header, main, footer {
         flex-direction: column;
     }
 }
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3fa34d;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
