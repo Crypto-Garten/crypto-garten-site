@@ -36,7 +36,12 @@ async function connectWallet() {
     await ethereum.request({ method: 'eth_requestAccounts' });
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
-    alert("Wallet connected.");
+    Swal.fire({
+  icon: 'success',
+  title: 'Wallet Connected!',
+  showConfirmButton: false,
+  timer: 2000
+});
   } else {
     alert("Please install MetaMask.");
   }
