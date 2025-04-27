@@ -20,6 +20,17 @@ const stakingAbi = [
 
 let provider, signer;
 
+// Helper to show spinner
+function setButtonLoading(button, loading, defaultText) {
+  if (loading) {
+    button.disabled = true;
+    button.innerHTML = `<span class="spinner"></span>Loading...`;
+  } else {
+    button.disabled = false;
+    button.innerText = defaultText;
+  }
+}
+
 async function connectWallet() {
   if (typeof window.ethereum !== 'undefined') {
     await ethereum.request({ method: 'eth_requestAccounts' });
@@ -32,18 +43,25 @@ async function connectWallet() {
 }
 
 async function buyTokens() {
+  if (!signer) return alert("Connect wallet first.");
+  const buyButton = document.getElementById("buy");
+  setButtonLoading(buyButton, true, "Buy with MetaMask");
   try {
     const contract = new ethers.Contract(presaleAddress, presaleAbi, signer);
-    const tx = await contract.buy({ value: ethers.utils.parseEther("0.01") }); // Adjust the amount as needed
+    const tx = await contract.buy({ value: ethers.utils.parseEther("0.01") });
     await tx.wait();
     alert("Tokens purchased!");
   } catch (err) {
     console.error(err);
     alert("Purchase failed.");
   }
+  setButtonLoading(buyButton, false, "Buy with MetaMask");
 }
 
 async function claimAirdrop() {
+  if (!signer) return alert("Connect wallet first.");
+  const airdropButton = document.getElementById("airdrop");
+  setButtonLoading(airdropButton, true, "Claim Airdrop");
   try {
     const contract = new ethers.Contract(airdropAddress, airdropAbi, signer);
     const tx = await contract.claim();
@@ -53,9 +71,13 @@ async function claimAirdrop() {
     console.error(err);
     alert("Claim failed.");
   }
+  setButtonLoading(airdropButton, false, "Claim Airdrop");
 }
 
 async function stakeTokens() {
+  if (!signer) return alert("Connect wallet first.");
+  const stakeButton = document.getElementById("stake");
+  setButtonLoading(stakeButton, true, "Stake");
   try {
     const contract = new ethers.Contract(stakingAddress, stakingAbi, signer);
     const tx = await contract.stake();
@@ -65,9 +87,13 @@ async function stakeTokens() {
     console.error(err);
     alert("Stake failed.");
   }
+  setButtonLoading(stakeButton, false, "Stake");
 }
 
 async function withdrawTokens() {
+  if (!signer) return alert("Connect wallet first.");
+  const withdrawButton = document.getElementById("withdraw");
+  setButtonLoading(withdrawButton, true, "Withdraw");
   try {
     const contract = new ethers.Contract(stakingAddress, stakingAbi, signer);
     const tx = await contract.withdraw();
@@ -77,12 +103,13 @@ async function withdrawTokens() {
     console.error(err);
     alert("Withdraw failed.");
   }
+  setButtonLoading(withdrawButton, false, "Withdraw");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("connect").onclick = connectWallet;
   document.getElementById("buy").onclick = buyTokens;
-  document.getElementById("claim").onclick = claimAirdrop;
+  document.getElementById("airdrop").onclick = claimAirdrop;
   document.getElementById("stake").onclick = stakeTokens;
   document.getElementById("withdraw").onclick = withdrawTokens;
 });
